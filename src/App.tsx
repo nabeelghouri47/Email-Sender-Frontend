@@ -1,0 +1,59 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { theme } from './theme/theme';
+import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
+import TemplatesEnhanced from './screens/TemplatesEnhanced';
+import EmailConfigs from './screens/EmailConfigs';
+import Campaigns from './screens/Campaigns';
+import Users from './screens/Users';
+import SuppressionList from './screens/SuppressionList';
+import EmailWarmup from './screens/EmailWarmup';
+import SpamChecker from './screens/SpamChecker';
+import AIContentGenerator from './screens/AIContentGenerator';
+import PersonalizationAnalyzer from './screens/PersonalizationAnalyzer';
+import MultiChannelCampaigns from './screens/MultiChannelCampaigns';
+import PrivateRoute from './components/PrivateRoute';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import './App.css';
+import { Layout } from './components/layout/Layout';
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/campaigns" element={<Campaigns />} />
+              <Route path="/templates" element={<TemplatesEnhanced />} />
+              <Route path="/email-configs" element={<EmailConfigs />} />
+              <Route path="/suppression-list" element={<SuppressionList />} />
+              <Route path="/email-warmup" element={<EmailWarmup />} />
+              <Route path="/spam-checker" element={<SpamChecker />} />
+              <Route path="/ai-content-generator" element={<AIContentGenerator />} />
+              <Route path="/personalization-analyzer" element={<PersonalizationAnalyzer />} />
+              <Route path="/multi-channel" element={<MultiChannelCampaigns />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/" element={<Navigate to="/dashboard" />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        theme="dark"
+      />
+    </ThemeProvider>
+  );
+}
+
+export default App;
