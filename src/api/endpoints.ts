@@ -303,3 +303,36 @@ export const multiChannelApi = {
   getCampaignStats: (id: number) => 
     axiosInstance.get(`/multi-channel/campaigns/${id}/stats`),
 };
+
+// AI Social Campaign APIs
+export const aiSocialApi = {
+  getAllCampaigns: () => axiosInstance.get('/ai-social/campaigns'),
+
+  createCampaign: (data: {
+    name: string;
+    description?: string;
+    aiPrompt: string;
+    platform: 'FACEBOOK' | 'INSTAGRAM' | 'TWITTER' | 'LINKEDIN';
+    facebookPageId: string;
+    facebookAccessToken: string;
+    durationDays: number;
+    postsPerDay: number;
+    postingTime: string;
+    requiresApproval: boolean;
+  }) => axiosInstance.post('/ai-social/campaigns', data),
+
+  startCampaign: (id: number) =>
+    axiosInstance.post(`/ai-social/campaigns/${id}/start`),
+
+  pauseCampaign: (id: number) =>
+    axiosInstance.post(`/ai-social/campaigns/${id}/pause`),
+
+  getCampaignPosts: (id: number) =>
+    axiosInstance.get(`/ai-social/campaigns/${id}/posts`),
+
+  approvePost: (id: number, token: string) =>
+    axiosInstance.get(`/ai-social/posts/${id}/approve?token=${token}`),
+
+  requestRevision: (id: number, token: string, instructions: string) =>
+    axiosInstance.post(`/ai-social/posts/${id}/request-revision`, { token, instructions }),
+};
