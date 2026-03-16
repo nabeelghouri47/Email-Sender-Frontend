@@ -90,6 +90,20 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+<<<<<<< HEAD
+=======
+/* Hide scrollbar but keep scrolling functionality */
+.ps-sidebar-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.ps-sidebar-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+>>>>>>> 5e525f2 (Frontend updated)
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
