@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -90,8 +90,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-<<<<<<< HEAD
-=======
 /* Hide scrollbar but keep scrolling functionality */
 .ps-sidebar-container::-webkit-scrollbar {
   width: 0px;
@@ -103,7 +101,6 @@ button:focus-visible {
   -ms-overflow-style: none;
 }
 
->>>>>>> 5e525f2 (Frontend updated)
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

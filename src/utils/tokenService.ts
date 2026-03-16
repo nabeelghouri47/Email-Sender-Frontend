@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-export const tokenService = {
+﻿export const tokenService = {
   getAccessToken: () => localStorage.getItem('accessToken'),
   getRefreshToken: () => localStorage.getItem('refreshToken'),
   getUser: () => {
@@ -22,28 +21,3 @@ export const tokenService = {
     localStorage.removeItem('user');
   },
 };
-=======
-export const tokenService = {
-  getAccessToken: () => localStorage.getItem('accessToken'),
-  getRefreshToken: () => localStorage.getItem('refreshToken'),
-  getUser: () => {
-    const userStr = localStorage.getItem('user');
-    return userStr ? JSON.parse(userStr) : null;
-  },
-
-  setTokens: (access: string, refresh: string) => {
-    localStorage.setItem('accessToken', access);
-    localStorage.setItem('refreshToken', refresh);
-  },
-
-  setUser: (user: any) => {
-    localStorage.setItem('user', JSON.stringify(user));
-  },
-
-  clearTokens: () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
-  },
-};
->>>>>>> 5e525f2 (Frontend updated)

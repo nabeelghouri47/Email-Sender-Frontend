@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import axiosInstance from './axiosInstance';
+﻿import axiosInstance from './axiosInstance';
 
 export const authApi = {
   login: (username: string, password: string) =>
@@ -304,7 +303,6 @@ export const multiChannelApi = {
   getCampaignStats: (id: number) => 
     axiosInstance.get(`/multi-channel/campaigns/${id}/stats`),
 };
-=======
 import axiosInstance from './axiosInstance';
 
 export const authApi = {
@@ -643,4 +641,3 @@ export const aiSocialApi = {
   requestRevision: (id: number, token: string, instructions: string) => 
     axiosInstance.post(`/ai-social/posts/${id}/request-revision`, { token, instructions }),
 };
->>>>>>> 5e525f2 (Frontend updated)
