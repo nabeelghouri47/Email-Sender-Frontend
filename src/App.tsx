@@ -16,12 +16,9 @@ import SpamChecker from './screens/SpamChecker';
 import AIContentGenerator from './screens/AIContentGenerator';
 import PersonalizationAnalyzer from './screens/PersonalizationAnalyzer';
 import MultiChannelCampaigns from './screens/MultiChannelCampaigns';
-<<<<<<< HEAD
-=======
 import AISocialCampaigns from './screens/AISocialCampaigns';
->>>>>>> 5e525f2 (Frontend updated)
 import PrivateRoute from './components/PrivateRoute';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { Layout } from './components/layout/Layout';
 
@@ -44,10 +41,7 @@ function App() {
               <Route path="/ai-content-generator" element={<AIContentGenerator />} />
               <Route path="/personalization-analyzer" element={<PersonalizationAnalyzer />} />
               <Route path="/multi-channel" element={<MultiChannelCampaigns />} />
-<<<<<<< HEAD
-=======
               <Route path="/ai-social-campaigns" element={<AISocialCampaigns />} />
->>>>>>> 5e525f2 (Frontend updated)
               <Route path="/users" element={<Users />} />
               <Route path="/" element={<Navigate to="/dashboard" />} />
             </Route>
