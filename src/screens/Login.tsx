@@ -164,9 +164,9 @@ const Login = () => {
               </Button>
 
               <Box mt={3} textAlign="center">
-                <Typography variant="caption" color="textSecondary">
+                {/* <Typography variant="caption" color="textSecondary">
                   Default: admin / admin123
-                </Typography>
+                </Typography> */}
               </Box>
             </Form>
           )}
