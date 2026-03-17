@@ -28,8 +28,6 @@ import {
   Sms,
   Notifications,
   WhatsApp,
-  Delete,
-  Edit,
 } from '@mui/icons-material';
 import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -327,7 +325,7 @@ const MultiChannelCampaigns = () => {
           validationSchema={validationSchema}
           onSubmit={handleCreateCampaign}
         >
-          {({ values, setFieldValue }) => (
+          {({ values }) => (
             <Form>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -479,7 +477,7 @@ const MultiChannelCampaigns = () => {
         <DialogContent>
           {campaignStats && (
             <Box>
-              <Tabs value={tabValue} onChange={(e, v) => setTabValue(v)}>
+              <Tabs value={tabValue} onChange={(_e, v) => setTabValue(v)}>
                 <Tab label="Overview" />
                 <Tab label="Channel Breakdown" />
               </Tabs>
