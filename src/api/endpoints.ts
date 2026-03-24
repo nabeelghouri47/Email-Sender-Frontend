@@ -304,6 +304,41 @@ export const multiChannelApi = {
     axiosInstance.get(`/multi-channel/campaigns/${id}/stats`),
 };
 
+// AI Provider Config APIs
+export const aiProviderConfigApi = {
+  getMyConfig: () => axiosInstance.get('/ai-provider-config/me'),
+  saveMyConfig: (data: {
+    openaiApiKey?: string;
+    openaiModel?: string;
+    geminiApiKey?: string;
+    geminiModel?: string;
+    claudeApiKey?: string;
+    claudeModel?: string;
+    textProvider?: 'OPENAI' | 'GEMINI';
+    imageProvider?: 'GEMINI_NANO' | 'OPENAI_DALLE';
+    templateProvider?: 'CLAUDE' | 'OPENAI' | 'GEMINI';
+  }) => axiosInstance.post('/ai-provider-config/me', data),
+  deleteMyConfig: () => axiosInstance.delete('/ai-provider-config/me'),
+  getGlobalConfig: () => axiosInstance.get('/ai-provider-config/global'),
+  saveGlobalConfig: (data: any) => axiosInstance.post('/ai-provider-config/global', data),
+};
+
+// Meta Config APIs
+export const metaConfigApi = {
+  getAll: () => axiosInstance.get('/meta-configs'),
+  getActive: () => axiosInstance.get('/meta-configs/active'),
+  create: (data: {
+    name: string;
+    facebookPageId: string;
+    facebookAccessToken: string;
+    instagramAccountId?: string;
+    instagramEnabled?: boolean;
+    isActive?: boolean;
+  }) => axiosInstance.post('/meta-configs', data),
+  update: (id: number, data: any) => axiosInstance.put(`/meta-configs/${id}`, data),
+  delete: (id: number) => axiosInstance.delete(`/meta-configs/${id}`),
+};
+
 // AI Social Campaign APIs
 export const aiSocialApi = {
   getAllCampaigns: () => axiosInstance.get('/ai-social/campaigns'),
@@ -313,8 +348,7 @@ export const aiSocialApi = {
     description?: string;
     aiPrompt: string;
     platform: 'FACEBOOK' | 'INSTAGRAM' | 'TWITTER' | 'LINKEDIN';
-    facebookPageId: string;
-    facebookAccessToken: string;
+    metaConfigId: number;
     durationDays: number;
     postsPerDay: number;
     postingTime: string;

@@ -28,14 +28,13 @@ import { Button } from '../components/common/Button';
 import { TextField } from '../components/common/TextField';
 import { Modal } from '../components/common/Modal';
 import { DataTable } from '../components/common/DataTable';
-import { aiSocialApi } from '../api/endpoints';
+import { aiSocialApi, metaConfigApi } from '../api/endpoints';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Campaign name is required'),
   aiPrompt: Yup.string().required('AI prompt is required'),
   platform: Yup.string().required('Platform is required'),
-  facebookPageId: Yup.string().required('Page ID is required'),
-  facebookAccessToken: Yup.string().required('Access token is required'),
+  metaConfigId: Yup.number().required('Please select a Meta account'),
   durationDays: Yup.number().min(1).required('Duration is required'),
   postsPerDay: Yup.number().min(1).max(10).required('Posts per day is required'),
   postingTime: Yup.string().required('Posting time is required'),
@@ -48,10 +47,21 @@ const AISocialCampaigns = () => {
   const [showPostsModal, setShowPostsModal] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
   const [campaignPosts, setCampaignPosts] = useState<any[]>([]);
+  const [metaConfigs, setMetaConfigs] = useState<any[]>([]);
 
   useEffect(() => {
     fetchCampaigns();
+    fetchMetaConfigs();
   }, []);
+
+  const fetchMetaConfigs = async () => {
+    try {
+      const res = await metaConfigApi.getActive();
+      setMetaConfigs(res.data);
+    } catch {
+      // silent
+    }
+  };
 
   const fetchCampaigns = async () => {
     setLoading(true);
@@ -174,6 +184,12 @@ const AISocialCampaigns = () => {
       ),
     },
     {
+      id: 'metaConfigName',
+      label: 'Meta Account',
+      minWidth: 160,
+      format: (value: any) => value || <Typography variant="caption" color="textSecondary">—</Typography>,
+    },
+    {
       id: 'status',
       label: 'Status',
       minWidth: 120,
@@ -283,8 +299,7 @@ const AISocialCampaigns = () => {
     description: '',
     aiPrompt: '',
     platform: 'FACEBOOK',
-    facebookPageId: '',
-    facebookAccessToken: '',
+    metaConfigId: '',
     durationDays: 7,
     postsPerDay: 1,
     postingTime: '09:00',
@@ -377,22 +392,18 @@ const AISocialCampaigns = () => {
 
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    name="facebookPageId"
-                    label="Page ID"
+                    name="metaConfigId"
+                    label="Meta Account"
+                    select
                     fullWidth
-                    placeholder="123456789"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    name="facebookAccessToken"
-                    label="Access Token"
-                    fullWidth
-                    multiline
-                    rows={2}
-                    placeholder="Paste your page access token"
-                  />
+                    SelectProps={{ native: true }}
+                    helperText={metaConfigs.length === 0 ? 'No Meta accounts configured. Go to Meta Configurations first.' : ''}
+                  >
+                    <option value="">-- Select Meta Account --</option>
+                    {metaConfigs.map((c: any) => (
+                      <option key={c.id} value={c.id}>{c.name} (Page: {c.facebookPageId})</option>
+                    ))}
+                  </TextField>
                 </Grid>
 
                 <Grid item xs={12} sm={4}>

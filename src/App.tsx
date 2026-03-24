@@ -17,6 +17,8 @@ import AIContentGenerator from './screens/AIContentGenerator';
 import PersonalizationAnalyzer from './screens/PersonalizationAnalyzer';
 import MultiChannelCampaigns from './screens/MultiChannelCampaigns';
 import AISocialCampaigns from './screens/AISocialCampaigns';
+import MetaConfigs from './screens/MetaConfigs';
+import AIProviderSettings from './screens/AIProviderSettings';
 import PrivateRoute from './components/PrivateRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -42,6 +44,8 @@ function App() {
               <Route path="/personalization-analyzer" element={<PersonalizationAnalyzer />} />
               <Route path="/multi-channel" element={<MultiChannelCampaigns />} />
               <Route path="/ai-social-campaigns" element={<AISocialCampaigns />} />
+              <Route path="/meta-configs" element={<MetaConfigs />} />
+              <Route path="/ai-provider-settings" element={<AIProviderSettings />} />
               <Route path="/users" element={<Users />} />
               <Route path="/" element={<Navigate to="/dashboard" />} />
             </Route>

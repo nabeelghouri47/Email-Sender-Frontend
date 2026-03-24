@@ -19,6 +19,7 @@ import {
   Settings as SettingsIcon,
   SmartToy as SmartToyIcon,
   VerifiedUser as VerifiedUserIcon,
+  Facebook as FacebookIcon,
 } from '@mui/icons-material';
 import styled from 'styled-components';
 import { SidebarContext } from './Layout';
@@ -148,6 +149,13 @@ export const Sidebar = () => {
             >
               Multi-Channel
             </MenuItem>
+            <MenuItem
+              icon={<FacebookIcon />}
+              active={location.pathname === '/ai-social-campaigns'}
+              onClick={() => navigate('/ai-social-campaigns')}
+            >
+              AI Social Campaigns
+            </MenuItem>
           </SubMenu>
 
           <MenuItem
@@ -165,6 +173,13 @@ export const Sidebar = () => {
               onClick={() => navigate('/email-configs')}
             >
               Email Configs
+            </MenuItem>
+            <MenuItem
+              icon={<FacebookIcon />}
+              active={location.pathname === '/meta-configs'}
+              onClick={() => navigate('/meta-configs')}
+            >
+              Meta Configs
             </MenuItem>
             <MenuItem
               icon={<TrendingUpIcon />}
@@ -206,6 +221,13 @@ export const Sidebar = () => {
               onClick={() => navigate('/personalization-analyzer')}
             >
               Personalization
+            </MenuItem>
+            <MenuItem
+              icon={<SettingsIcon />}
+              active={location.pathname === '/ai-provider-settings'}
+              onClick={() => navigate('/ai-provider-settings')}
+            >
+              AI Provider Keys
             </MenuItem>
           </SubMenu>
 
