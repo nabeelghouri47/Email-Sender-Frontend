@@ -323,6 +323,23 @@ export const aiProviderConfigApi = {
   saveGlobalConfig: (data: any) => axiosInstance.post('/ai-provider-config/global', data),
 };
 
+// Subscription APIs
+export const subscriptionApi = {
+  getPlans: () => axiosInstance.get('/subscriptions/plans'),
+  getAllPlans: () => axiosInstance.get('/subscriptions/plans/all'),
+  createPlan: (data: any) => axiosInstance.post('/subscriptions/plans', data),
+  updatePlan: (id: number, data: any) => axiosInstance.put(`/subscriptions/plans/${id}`, data),
+  deletePlan: (id: number) => axiosInstance.delete(`/subscriptions/plans/${id}`),
+  
+  getMySubscription: () => axiosInstance.get('/subscriptions/my-subscription'),
+  subscribe: (planId: number, billingCycle: 'MONTHLY' | 'YEARLY') =>
+    axiosInstance.post('/subscriptions/subscribe', { planId, billingCycle }),
+  cancelSubscription: () => axiosInstance.post('/subscriptions/cancel'),
+  
+  hasFeature: (featureCode: string) => axiosInstance.get(`/subscriptions/has-feature/${featureCode}`),
+  canCreateCampaign: (campaignType: string) => axiosInstance.get(`/subscriptions/can-create-campaign/${campaignType}`),
+};
+
 // Meta Config APIs
 export const metaConfigApi = {
   getAll: () => axiosInstance.get('/meta-configs'),

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Typography, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Tooltip } from '@mui/material';
+import { Box, Typography, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Tooltip, Alert } from '@mui/material';
 import { Add, Upload, PlayArrow, Pause, Stop, Schedule, Edit, Delete, Send } from '@mui/icons-material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -10,6 +10,7 @@ import { TextField } from '../components/common/TextField';
 import { Modal } from '../components/common/Modal';
 import { DataTable } from '../components/common/DataTable';
 import { Select, MenuItem, FormControl, InputLabel, FormControlLabel, Checkbox } from '@mui/material';
+import { useCampaignLimit } from '../hooks/useCampaignLimit';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Campaign name is required'),
@@ -29,6 +30,9 @@ const Campaigns = () => {
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
   const [editingCampaign, setEditingCampaign] = useState<any>(null);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const { checkLimit, getLimitInfo } = useCampaignLimit();
+
+  const limitInfo = getLimitInfo('email');
 
   useEffect(() => {
     fetchData();
@@ -53,6 +57,12 @@ const Campaigns = () => {
   };
 
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
+    // Check limit only for new campaigns
+    if (!editingCampaign && !checkLimit('email')) {
+      setSubmitting(false);
+      return;
+    }
+
     try {
       if (editingCampaign) {
         await campaignApi.updateCampaign(editingCampaign.id, values);
@@ -285,14 +295,33 @@ const Campaigns = () => {
 
   return (
     <Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Typography variant="h4" fontWeight={700}>
-          Campaigns
-        </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Box>
+          <Typography variant="h4" fontWeight={700}>
+            Campaigns
+          </Typography>
+          <Typography variant="body2" color="textSecondary" sx={{ mt: 0.5 }}>
+            {limitInfo.unlimited 
+              ? `${limitInfo.used} campaigns created (Unlimited)` 
+              : `${limitInfo.used} / ${limitInfo.limit} campaigns used`}
+          </Typography>
+        </Box>
         <Button variant="contained" startIcon={<Add />} onClick={() => setShowModal(true)}>
           New Campaign
         </Button>
       </Box>
+
+      {!limitInfo.unlimited && limitInfo.remaining <= 2 && limitInfo.remaining > 0 && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          You have {limitInfo.remaining} campaign{limitInfo.remaining !== 1 ? 's' : ''} remaining. Upgrade your plan for more campaigns.
+        </Alert>
+      )}
+
+      {!limitInfo.unlimited && limitInfo.remaining === 0 && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          Campaign limit reached! Upgrade your plan to create more campaigns.
+        </Alert>
+      )}
 
       <DataTable columns={columns} data={campaigns} loading={loading} />
 

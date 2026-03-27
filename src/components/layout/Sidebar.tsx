@@ -11,18 +11,22 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   Block as BlockIcon,
-  TrendingUp as TrendingUpIcon,
   Security as SecurityIcon,
-  AutoAwesome as AutoAwesomeIcon,
-  Psychology as PsychologyIcon,
-  Hub as HubIcon,
   Settings as SettingsIcon,
-  SmartToy as SmartToyIcon,
-  VerifiedUser as VerifiedUserIcon,
   Facebook as FacebookIcon,
+  YouTube as YouTubeIcon,
+  Videocam as TikTokIcon,
+  MonetizationOn as AdsIcon,
+  AccountCircle as ProfileIcon,
+  CreditCard as CardIcon,
+  Subscriptions as SubscriptionIcon,
+  Lock as PermissionIcon,
+  AdminPanelSettings as SuperAdminIcon,
+  ToggleOn as ToggleIcon,
 } from '@mui/icons-material';
 import styled from 'styled-components';
 import { SidebarContext } from './Layout';
+import { useSubscription } from '../../context/SubscriptionContext';
 
 const SidebarContainer = styled(Box)`
   height: 100vh;
@@ -95,6 +99,7 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { collapsed, setCollapsed } = useContext(SidebarContext);
+  const { hasFeature } = useSubscription();
 
   const getUserFromLocalStorage = () => {
     const userStr = localStorage.getItem('user');
@@ -109,6 +114,8 @@ export const Sidebar = () => {
   };
 
   const user = getUserFromLocalStorage();
+  const isSuperAdmin = user?.roles?.includes('ROLE_SUPER_ADMIN');
+  const isAdmin = user?.roles?.includes('ROLE_ADMIN');
 
   return (
     <SidebarContainer>
@@ -126,6 +133,7 @@ export const Sidebar = () => {
         </Logo>
 
         <Menu>
+          {/* Dashboard */}
           <MenuItem
             icon={<DashboardIcon />}
             active={location.pathname === '/dashboard'}
@@ -134,111 +142,235 @@ export const Sidebar = () => {
             Dashboard
           </MenuItem>
 
-          <SubMenu label="Campaigns" icon={<CampaignIcon />}>
+          {/* Campaigns */}
+          {(isSuperAdmin || isAdmin || 
+            hasFeature('EMAIL_CAMPAIGN') || 
+            hasFeature('META_CAMPAIGN') || 
+            hasFeature('ADS_CAMPAIGN') || 
+            hasFeature('YOUTUBE_CAMPAIGN') || 
+            hasFeature('TIKTOK_CAMPAIGN')) && (
+            <SubMenu label="Campaigns" icon={<CampaignIcon />}>
+              {(isSuperAdmin || isAdmin || hasFeature('EMAIL_CAMPAIGN')) && (
+                <MenuItem
+                  icon={<EmailIcon />}
+                  active={location.pathname === '/campaigns'}
+                  onClick={() => navigate('/campaigns')}
+                >
+                  Email Campaign
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('META_CAMPAIGN')) && (
+                <MenuItem
+                  icon={<FacebookIcon />}
+                  active={location.pathname === '/meta-campaigns'}
+                  onClick={() => navigate('/meta-campaigns')}
+                >
+                  Meta Campaign
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('ADS_CAMPAIGN')) && (
+                <MenuItem
+                  icon={<AdsIcon />}
+                  active={location.pathname === '/ads-campaigns'}
+                  onClick={() => navigate('/ads-campaigns')}
+                >
+                  Ads Campaign
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('YOUTUBE_CAMPAIGN')) && (
+                <MenuItem
+                  icon={<YouTubeIcon />}
+                  active={location.pathname === '/youtube-campaigns'}
+                  onClick={() => navigate('/youtube-campaigns')}
+                >
+                  YouTube Campaign
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('TIKTOK_CAMPAIGN')) && (
+                <MenuItem
+                  icon={<TikTokIcon />}
+                  active={location.pathname === '/tiktok-campaigns'}
+                  onClick={() => navigate('/tiktok-campaigns')}
+                >
+                  TikTok Campaign
+                </MenuItem>
+              )}
+            </SubMenu>
+          )}
+
+          {/* Templates */}
+          {(isSuperAdmin || isAdmin || hasFeature('TEMPLATES')) && (
             <MenuItem
-              icon={<CampaignIcon />}
-              active={location.pathname === '/campaigns'}
-              onClick={() => navigate('/campaigns')}
+              icon={<DescriptionIcon />}
+              active={location.pathname === '/templates'}
+              onClick={() => navigate('/templates')}
             >
-              Email Campaigns
+              Templates
+            </MenuItem>
+          )}
+
+          {/* Configuration */}
+          {(isSuperAdmin || isAdmin || 
+            hasFeature('EMAIL_CONFIG') || 
+            hasFeature('META_CONFIG') || 
+            hasFeature('ADS_CONFIG') || 
+            hasFeature('YOUTUBE_CONFIG') || 
+            hasFeature('TIKTOK_CONFIG')) && (
+            <SubMenu label="Configuration" icon={<SettingsIcon />}>
+              {(isSuperAdmin || isAdmin || hasFeature('EMAIL_CONFIG')) && (
+                <MenuItem
+                  icon={<EmailIcon />}
+                  active={location.pathname === '/email-configs'}
+                  onClick={() => navigate('/email-configs')}
+                >
+                  Email Config
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('META_CONFIG')) && (
+                <MenuItem
+                  icon={<FacebookIcon />}
+                  active={location.pathname === '/meta-configs'}
+                  onClick={() => navigate('/meta-configs')}
+                >
+                  Meta Config
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('ADS_CONFIG')) && (
+                <MenuItem
+                  icon={<AdsIcon />}
+                  active={location.pathname === '/ads-configs'}
+                  onClick={() => navigate('/ads-configs')}
+                >
+                  Ads Config
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('YOUTUBE_CONFIG')) && (
+                <MenuItem
+                  icon={<YouTubeIcon />}
+                  active={location.pathname === '/youtube-configs'}
+                  onClick={() => navigate('/youtube-configs')}
+                >
+                  YouTube Config
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('TIKTOK_CONFIG')) && (
+                <MenuItem
+                  icon={<TikTokIcon />}
+                  active={location.pathname === '/tiktok-configs'}
+                  onClick={() => navigate('/tiktok-configs')}
+                >
+                  TikTok Config
+                </MenuItem>
+              )}
+            </SubMenu>
+          )}
+
+          {/* Deliverability */}
+          {(isSuperAdmin || isAdmin || hasFeature('SPAM_CHECKER') || hasFeature('SUPPRESSION_LIST')) && (
+            <SubMenu label="Deliverability" icon={<SecurityIcon />}>
+              {(isSuperAdmin || isAdmin || hasFeature('SPAM_CHECKER')) && (
+                <MenuItem
+                  icon={<SecurityIcon />}
+                  active={location.pathname === '/spam-checker'}
+                  onClick={() => navigate('/spam-checker')}
+                >
+                  Spam Checker
+                </MenuItem>
+              )}
+              {(isSuperAdmin || isAdmin || hasFeature('SUPPRESSION_LIST')) && (
+                <MenuItem
+                  icon={<BlockIcon />}
+                  active={location.pathname === '/suppression-list'}
+                  onClick={() => navigate('/suppression-list')}
+                >
+                  Suppression List
+                </MenuItem>
+              )}
+            </SubMenu>
+          )}
+
+          {/* Settings */}
+          <SubMenu label="Settings" icon={<SettingsIcon />}>
+            <MenuItem
+              icon={<ProfileIcon />}
+              active={location.pathname === '/profile-settings'}
+              onClick={() => navigate('/profile-settings')}
+            >
+              Profile Settings
             </MenuItem>
             <MenuItem
-              icon={<HubIcon />}
-              active={location.pathname === '/multi-channel'}
-              onClick={() => navigate('/multi-channel')}
+              icon={<CardIcon />}
+              active={location.pathname === '/card-management'}
+              onClick={() => navigate('/card-management')}
             >
-              Multi-Channel
+              Card Management
             </MenuItem>
-            <MenuItem
-              icon={<FacebookIcon />}
-              active={location.pathname === '/ai-social-campaigns'}
-              onClick={() => navigate('/ai-social-campaigns')}
-            >
-              AI Social Campaigns
-            </MenuItem>
+            {(isAdmin || isSuperAdmin) && (
+              <>
+                <MenuItem
+                  icon={<PeopleIcon />}
+                  active={location.pathname === '/users'}
+                  onClick={() => navigate('/users')}
+                >
+                  Users
+                </MenuItem>
+                <MenuItem
+                  icon={<SubscriptionIcon />}
+                  active={location.pathname === '/subscription-management'}
+                  onClick={() => navigate('/subscription-management')}
+                >
+                  Subscription Management
+                </MenuItem>
+                <MenuItem
+                  icon={<SettingsIcon />}
+                  active={location.pathname === '/ai-provider-settings'}
+                  onClick={() => navigate('/ai-provider-settings')}
+                >
+                  AI Provider Keys
+                </MenuItem>
+                <MenuItem
+                  icon={<PermissionIcon />}
+                  active={location.pathname === '/permissions'}
+                  onClick={() => navigate('/permissions')}
+                >
+                  Permissions
+                </MenuItem>
+              </>
+            )}
           </SubMenu>
 
-          <MenuItem
-            icon={<DescriptionIcon />}
-            active={location.pathname === '/templates'}
-            onClick={() => navigate('/templates')}
-          >
-            Templates
-          </MenuItem>
-
-          <SubMenu label="Configuration" icon={<SettingsIcon />}>
-            <MenuItem
-              icon={<EmailIcon />}
-              active={location.pathname === '/email-configs'}
-              onClick={() => navigate('/email-configs')}
-            >
-              Email Configs
-            </MenuItem>
-            <MenuItem
-              icon={<FacebookIcon />}
-              active={location.pathname === '/meta-configs'}
-              onClick={() => navigate('/meta-configs')}
-            >
-              Meta Configs
-            </MenuItem>
-            <MenuItem
-              icon={<TrendingUpIcon />}
-              active={location.pathname === '/email-warmup'}
-              onClick={() => navigate('/email-warmup')}
-            >
-              Email Warmup
-            </MenuItem>
-          </SubMenu>
-
-          <SubMenu label="Deliverability" icon={<VerifiedUserIcon />}>
-            <MenuItem
-              icon={<BlockIcon />}
-              active={location.pathname === '/suppression-list'}
-              onClick={() => navigate('/suppression-list')}
-            >
-              Suppression List
-            </MenuItem>
-            <MenuItem
-              icon={<SecurityIcon />}
-              active={location.pathname === '/spam-checker'}
-              onClick={() => navigate('/spam-checker')}
-            >
-              Spam Checker
-            </MenuItem>
-          </SubMenu>
-
-          <SubMenu label="AI Tools" icon={<SmartToyIcon />}>
-            <MenuItem
-              icon={<AutoAwesomeIcon />}
-              active={location.pathname === '/ai-content-generator'}
-              onClick={() => navigate('/ai-content-generator')}
-            >
-              Content Generator
-            </MenuItem>
-            <MenuItem
-              icon={<PsychologyIcon />}
-              active={location.pathname === '/personalization-analyzer'}
-              onClick={() => navigate('/personalization-analyzer')}
-            >
-              Personalization
-            </MenuItem>
-            <MenuItem
-              icon={<SettingsIcon />}
-              active={location.pathname === '/ai-provider-settings'}
-              onClick={() => navigate('/ai-provider-settings')}
-            >
-              AI Provider Keys
-            </MenuItem>
-          </SubMenu>
-
-          {user?.roles?.includes('ROLE_ADMIN') && (
-            <MenuItem
-              icon={<PeopleIcon />}
-              active={location.pathname === '/users'}
-              onClick={() => navigate('/users')}
-            >
-              Users
-            </MenuItem>
+          {/* Super Admin Controls */}
+          {isSuperAdmin && (
+            <SubMenu label="Super Admin" icon={<SuperAdminIcon />}>
+              <MenuItem
+                icon={<SuperAdminIcon />}
+                active={location.pathname === '/tenant-management'}
+                onClick={() => navigate('/tenant-management')}
+              >
+                Tenant Management
+              </MenuItem>
+              <MenuItem
+                icon={<ToggleIcon />}
+                active={location.pathname === '/feature-management'}
+                onClick={() => navigate('/feature-management')}
+              >
+                Feature Management
+              </MenuItem>
+              <MenuItem
+                icon={<SubscriptionIcon />}
+                active={location.pathname === '/plan-management'}
+                onClick={() => navigate('/plan-management')}
+              >
+                Plan Management
+              </MenuItem>
+              <MenuItem
+                icon={<PeopleIcon />}
+                active={location.pathname === '/system-users'}
+                onClick={() => navigate('/system-users')}
+              >
+                User Control
+              </MenuItem>
+            </SubMenu>
           )}
         </Menu>
       </ProSidebar>

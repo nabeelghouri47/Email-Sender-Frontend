@@ -4,6 +4,7 @@ import { CssBaseline } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { theme } from './theme/theme';
+import { SubscriptionProvider } from './context/SubscriptionContext';
 import Login from './screens/Login';
 import Dashboard from './screens/Dashboard';
 import TemplatesEnhanced from './screens/TemplatesEnhanced';
@@ -19,6 +20,12 @@ import MultiChannelCampaigns from './screens/MultiChannelCampaigns';
 import AISocialCampaigns from './screens/AISocialCampaigns';
 import MetaConfigs from './screens/MetaConfigs';
 import AIProviderSettings from './screens/AIProviderSettings';
+import SubscriptionManagement from './screens/SubscriptionManagement';
+import { SystemFeatureControl } from './screens/SystemFeatureControl';
+import { SystemUserControl } from './screens/SystemUserControl';
+import { TenantManagement } from './screens/TenantManagement';
+import { FeatureManagement } from './screens/FeatureManagement';
+import { DatabaseSetup } from './screens/DatabaseSetup';
 import PrivateRoute from './components/PrivateRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -28,11 +35,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route element={<Layout />}>
-            <Route element={<PrivateRoute />}>
+      <SubscriptionProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<Layout />}>
+              <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/campaigns" element={<Campaigns />} />
               <Route path="/templates" element={<TemplatesEnhanced />} />
@@ -46,12 +54,19 @@ function App() {
               <Route path="/ai-social-campaigns" element={<AISocialCampaigns />} />
               <Route path="/meta-configs" element={<MetaConfigs />} />
               <Route path="/ai-provider-settings" element={<AIProviderSettings />} />
+              <Route path="/subscription-management" element={<SubscriptionManagement />} />
+              <Route path="/tenant-management" element={<TenantManagement />} />
+              <Route path="/feature-management" element={<FeatureManagement />} />
+              <Route path="/plan-management" element={<SubscriptionManagement />} />
+              <Route path="/system-users" element={<SystemUserControl />} />
+              <Route path="/database-setup" element={<DatabaseSetup />} />
               <Route path="/users" element={<Users />} />
               <Route path="/" element={<Navigate to="/dashboard" />} />
             </Route>
           </Route>
         </Routes>
       </BrowserRouter>
+      </SubscriptionProvider>
       <ToastContainer
         position="top-right"
         autoClose={3000}
