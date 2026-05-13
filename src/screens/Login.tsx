@@ -7,7 +7,7 @@ import { Email, Lock } from '@mui/icons-material';
 import styled from 'styled-components';
 import { loginRequest } from '../actions/authActions';
 import { type RootState } from '../redux/reducer/rootReducer';
-import { Button } from '../components/common/Button';
+// import { Button } from '../components/common/Button';
 import { TextField } from '../components/common/TextField';
 import { useEffect } from 'react';
 
@@ -97,7 +97,7 @@ const validationSchema = Yup.object({
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, loading, error } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, error } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
