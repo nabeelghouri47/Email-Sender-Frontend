@@ -105,8 +105,7 @@ const Login = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = (e:any,values: { username: string; password: string }) => {
-    e.preventDefault()
+  const handleSubmit = (values: { username: string; password: string }) => {
     dispatch(loginRequest(values));
   };
 
