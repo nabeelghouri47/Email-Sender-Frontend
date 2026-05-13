@@ -9,7 +9,7 @@ declare module 'axios' {
   }
 }
 
-const BASE_URL = 'https://emailsender-backend-b42u.onrender.com/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://emailsender-backend-b42u.onrender.com/api';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
