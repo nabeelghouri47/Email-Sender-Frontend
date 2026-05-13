@@ -153,15 +153,9 @@ const Login = () => {
                 </Typography>
               )}
 
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                loading={loading}
-                size="large"
-              >
-                Sign In
-              </Button>
+              <button type="submit">
+  Sign In
+</button>
 
               <Box mt={3} textAlign="center">
                 {/* <Typography variant="caption" color="textSecondary">
