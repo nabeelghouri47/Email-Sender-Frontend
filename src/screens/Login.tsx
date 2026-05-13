@@ -1,4 +1,4 @@
-﻿import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -105,7 +105,8 @@ const Login = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = (values: { username: string; password: string }) => {
+  const handleSubmit = (e:any,values: { username: string; password: string }) => {
+    e.preventDefault()
     dispatch(loginRequest(values));
   };
 
