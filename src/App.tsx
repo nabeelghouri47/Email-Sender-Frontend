@@ -26,6 +26,13 @@ import { SystemUserControl } from './screens/SystemUserControl';
 import { TenantManagement } from './screens/TenantManagement';
 import { FeatureManagement } from './screens/FeatureManagement';
 import { DatabaseSetup } from './screens/DatabaseSetup';
+import { AdsConfigs } from './screens/AdsConfigs';
+import { AdsCampaigns } from './screens/AdsCampaigns';
+import { YouTubeConfigs } from './screens/YouTubeConfigs';
+import { YouTubeCampaigns } from './screens/YouTubeCampaigns';
+import { TikTokConfigs } from './screens/TikTokConfigs';
+import { TikTokCampaigns } from './screens/TikTokCampaigns';
+import { MetaCampaigns } from './screens/MetaCampaigns';
 import PrivateRoute from './components/PrivateRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -61,6 +68,13 @@ function App() {
               <Route path="/system-users" element={<SystemUserControl />} />
               <Route path="/database-setup" element={<DatabaseSetup />} />
               <Route path="/users" element={<Users />} />
+              <Route path="/ads-configs" element={<AdsConfigs />} />
+              <Route path="/ads-campaigns" element={<AdsCampaigns />} />
+              <Route path="/youtube-configs" element={<YouTubeConfigs />} />
+              <Route path="/youtube-campaigns" element={<YouTubeCampaigns />} />
+              <Route path="/tiktok-configs" element={<TikTokConfigs />} />
+              <Route path="/tiktok-campaigns" element={<TikTokCampaigns />} />
+              <Route path="/meta-campaigns" element={<MetaCampaigns />} />
               <Route path="/" element={<Navigate to="/dashboard" />} />
             </Route>
           </Route>
