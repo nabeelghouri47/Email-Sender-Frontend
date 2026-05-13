@@ -21,7 +21,6 @@ import AISocialCampaigns from './screens/AISocialCampaigns';
 import MetaConfigs from './screens/MetaConfigs';
 import AIProviderSettings from './screens/AIProviderSettings';
 import SubscriptionManagement from './screens/SubscriptionManagement';
-import { SystemFeatureControl } from './screens/SystemFeatureControl';
 import { SystemUserControl } from './screens/SystemUserControl';
 import { TenantManagement } from './screens/TenantManagement';
 import { FeatureManagement } from './screens/FeatureManagement';
