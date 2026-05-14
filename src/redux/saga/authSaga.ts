@@ -6,7 +6,7 @@ import { loginSuccess, loginFailure } from '../../actions/authActions';
 function* loginSaga(action: any): Generator<any, void, any> {
 
   console.log("action.........................",action)
-
+  debugger
   try {
     const response = yield call(
       [axiosInstance, 'post'],
